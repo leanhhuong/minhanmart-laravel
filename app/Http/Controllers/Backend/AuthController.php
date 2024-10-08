@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class AuthController extends Controller
 {
@@ -13,6 +14,9 @@ class AuthController extends Controller
 
     public function login()
     {
+        if (Auth::id() > 0) {
+            return redirect()->route('dashboard.index');
+        }
         return view('backend.auth.login');
     }
 
@@ -23,13 +27,18 @@ class AuthController extends Controller
             'password' => $request->input('password'),
         ];
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            echo 1;
-            die();
-            // return redirect()->intended('dashboard');
+            toastr()->success('Đăng nhập thành công');
+            return redirect()->route('dashboard.index');
         }
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        toastr()->error('Email hoặc mật khẩu không chính xác');
+        return redirect()->route('auth.login');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('auth.login');
     }
 }
