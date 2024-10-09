@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::id() > 0) {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('dashboard.layout');
         }
         return view('backend.auth.login');
     }
@@ -28,7 +28,7 @@ class AuthController extends Controller
         ];
         if (Auth::attempt($credentials)) {
             toastr()->success('Đăng nhập thành công');
-            return redirect()->route('dashboard.index');
+            return redirect()->route('dashboard.layout');
         }
         toastr()->error('Email hoặc mật khẩu không chính xác');
         return redirect()->route('auth.login');

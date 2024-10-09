@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index')->middleware(AuthenticateMiddleware::class);
+Route::get('dashboard/layout', [DashboardController::class, 'layout'])->name('dashboard.layout')->middleware(AuthenticateMiddleware::class);
 
 Route::get('login', [AuthController::class, 'login'])->name('auth.login')->middleware('checklogin');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
