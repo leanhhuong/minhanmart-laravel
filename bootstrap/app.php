@@ -26,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->trustProxies(at: '*');
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

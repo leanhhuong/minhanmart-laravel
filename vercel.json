@@ -1,21 +1,32 @@
 {
     "version": 2,
-    "framework": "null",
-
+    "regions": ["fra1"],
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.1"
+        }
     },
     "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/build/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
     ],
+    "outputDirectory": "public",
 
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true",
-        "APP_URL": "https://akos-portfolio.vercel.app",
+        "APP_DEBUG": "false",
+        "APP_URL": "https://minhanmart.vercel.app",
+
+        "DB_CONNECTION": "turso",
+        "DB_URL": "https://minhanmart-leanhhuong.turso.io",
+        "DB_ACCESS_TOKEN": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3Mjg2MjIzMzEsImlkIjoiNWNmN2M3MjktZDJkYy00ZWUzLWE1M2YtMDlmODFhZGE3NmNlIn0.g2CLGYuRJFI7_UvBzPmKkqKEq8Fo26H9WT0Kqp_PlqA5UgtJXgw9VrDkLdZnupimILkhs7xgub1j41oHv3qvDA",
+        "DB_DATABASE": "minhanmart",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
